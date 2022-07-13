@@ -7,6 +7,7 @@ import { CORS_ORIGIN } from "./constants"
 import helmet from "helmet"
 import userRoute from "./modules/user/user.route"
 import authRoute from "./modules/auth/auth.route"
+import videoRoute from "./modules/videos/video.route"
 import deserializeUser from "./middlewares/deserialzeUser"
 const PORT = process.env.PORT || 4000
 
@@ -24,6 +25,7 @@ app.use(deserializeUser)
 
 app.use("/users", userRoute)
 app.use("/auth", authRoute)
+app.use("/videos", videoRoute)
 
 const server = app.listen(PORT, async() => {
     await connectToDatabase()
