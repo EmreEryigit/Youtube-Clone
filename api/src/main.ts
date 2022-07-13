@@ -6,7 +6,8 @@ import cors from "cors"
 import { CORS_ORIGIN } from "./constants"
 import helmet from "helmet"
 import userRoute from "./modules/user/user.route"
-
+import authRoute from "./modules/auth/auth.route"
+import deserializeUser from "./middlewares/deserialzeUser"
 const PORT = process.env.PORT || 4000
 
 const app = express()
@@ -18,11 +19,11 @@ app.use(cors({
     origin: CORS_ORIGIN,
     credentials: true
 }))
-
+app.use(deserializeUser)
 
 
 app.use("/users", userRoute)
-
+app.use("/auth", authRoute)
 
 const server = app.listen(PORT, async() => {
     await connectToDatabase()
