@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  mongodb:
+    container_name: "mongodb"
+    image: mongo:latest
+    hostname: mongodb
+    restart: always
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build: ./nginx
+    ports:
+      - "3050:80"
+  api:
+    build: ./api
+    volumes:
+      - /app/node_modules
+      - ./api:/app
+  client:
+    build: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
